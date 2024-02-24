@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private Transform attackPoint;
     [SerializeField]private LayerMask stormLayer;
     [SerializeField]private GameObject stormG;
+    [SerializeField]private GameManager GM;
 
-    public InputAction playerInput;
     public LayerMask enemyLayers;
 
     private Rigidbody rb;
@@ -87,6 +87,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void DebugSpace(InputAction.CallbackContext context) {
+        if(context.started) {
+            GM.loadNextLevel();
+        }
+    }
+
     void UpdateDir() {
         if(Input.mousePosition.x > Screen.width/2) {
             if(Input.mousePosition.y > Screen.height/2) {
@@ -142,18 +148,6 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         
     }
-
-    // private void OnTriggerEnter(Collider other) {
-    //     if(other.gameObject.layer == stormLayer) {
-    //         stormHit();
-    //     }
-    // }
-
-    // private void stormHit() {
-    //     Debug.Log("Storm HIT!!");
-
-    //     stormG.GetComponent<Rigidbody>().velocity = Vector3.zero;
-    // }
 
 }
 

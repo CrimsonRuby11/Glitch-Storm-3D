@@ -8,6 +8,7 @@ public class StormController : MonoBehaviour
 
     [SerializeField]private PlayerController playerC;   
     [SerializeField]private float stormSpeed;
+    [SerializeField]private GameManager GM;
 
     private Vector3 stormVel;
     private Rigidbody rb;
@@ -44,6 +45,7 @@ public class StormController : MonoBehaviour
 
     private void stormHit() {
         isPlayerHit = true;
+        GM.isStageFailed = true;
         Debug.Log("STORM HIT!!");
     }
 }
