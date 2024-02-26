@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float attackRange = 0f;
     [SerializeField]private float debugSpeed;
 
+    [SerializeField]private List<GameObject> slashes;
+
     [SerializeField]private Transform attackPoint;
     [SerializeField]private LayerMask stormLayer;
     [SerializeField]private GameObject stormG;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     Vector3 dir;
+    private int slashCount;
     private bool canAttack;
     private bool canDash;
     private bool isDashing;
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         isDashing = false;
         isStormHit= false;
+        slashCount = 0;
     }
 
     
@@ -62,6 +66,10 @@ public class PlayerController : MonoBehaviour
         float moveH = Input.GetAxisRaw("Horizontal");
         float moveV = Input.GetAxisRaw("Vertical");
         rb.velocity = new Vector3(moveH * debugSpeed, rb.velocity.y, moveV * debugSpeed);
+    }
+
+    void slash() {
+        slashes[slashCount].SetActive(true);        
     }
 
     public void Attack(InputAction.CallbackContext context) {
@@ -125,11 +133,15 @@ public class PlayerController : MonoBehaviour
         // Animate and Attack
         if(canAttack) {
             rb.MovePosition(transform.position + dir*attackMoveDistance);
+            slash();
             canAttack = false;
         }
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+        slashes[slashCount++].SetActive(false);
+        if(slashCount == 3) slashCount = 0;
+        
     }
 
     private IEnumerator DashCR() {
