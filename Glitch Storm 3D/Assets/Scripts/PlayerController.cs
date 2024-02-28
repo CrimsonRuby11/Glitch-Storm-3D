@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private LayerMask stormLayer;
     [SerializeField]private GameObject stormG;
     [SerializeField]private GameManager GM;
+    [SerializeField]private MeterController meterController;
 
     public LayerMask enemyLayers;
 
@@ -92,6 +93,8 @@ public class PlayerController : MonoBehaviour
     public void Dash(InputAction.CallbackContext context) {
         if(context.started && canDash) {
             StartCoroutine(DashCR());
+
+            meterController.startDashMeter();
         }
     }
 
@@ -145,10 +148,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator DashCR() {
+
         canDash = false;
         isDashing = true;
 
         rb.velocity = transform.forward * dashSpeed;
+        meterController.setDashIcon(true);
         
         yield return new WaitForSeconds(dashTime);
 
@@ -158,6 +163,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
+        meterController.setDashIcon(false);
         
     }
 

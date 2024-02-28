@@ -382,6 +382,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.20f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/MeterController.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/StormController.cs"
 -langversion:9.0
