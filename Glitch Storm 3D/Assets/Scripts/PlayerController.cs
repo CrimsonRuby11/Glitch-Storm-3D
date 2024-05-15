@@ -47,20 +47,24 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        if(isStormHit) {
-            return;
-        }
+        if(!meterController.isPaused()) {
+            if(isStormHit) {
+                return;
+            }
 
-        UpdateDir();
-        UpdatePlayerFace();
+            UpdateDir();
+            UpdatePlayerFace();
+        }
     }
 
     void FixedUpdate() {
-        if(isDashing || isStormHit) {
-            return;
-        }
+        if(!meterController.isPaused()) {
+            if(isDashing || isStormHit) {
+                return;
+            }
 
-        DebugMovement();
+            DebugMovement();
+        }
     }
 
     void DebugMovement() {
@@ -76,7 +80,7 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context) {
         
 
-        if(context.started && canAttack && !isDashing) {
+        if(context.started && canAttack && !isDashing && !meterController.isPaused()) {
             StartCoroutine(AttackCR());
 
             Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
@@ -91,16 +95,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Dash(InputAction.CallbackContext context) {
-        if(context.started && canDash) {
+        if(context.started && canDash && !meterController.isPaused()) {
             StartCoroutine(DashCR());
 
             meterController.startDashMeter();
-        }
-    }
-
-    public void DebugSpace(InputAction.CallbackContext context) {
-        if(context.started) {
-            GM.loadNextLevel();
         }
     }
 
@@ -165,6 +163,10 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         meterController.setDashIcon(false);
         
+    }
+
+    public void setCanDash(bool b) {
+        canDash = b;
     }
 
 }

@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]private Transform playerTransform;
     [SerializeField]private float distance;
     [SerializeField]private float lerpSpeed;
+    [SerializeField]private float offset;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position, playerTransform.position + new Vector3(-distance, distance-0.2f, -distance), lerpSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, playerTransform.position + new Vector3(-distance+offset, distance-0.2f, -distance), lerpSpeed * Time.deltaTime);
     }
 }
